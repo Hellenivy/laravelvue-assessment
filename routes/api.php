@@ -21,3 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/orders', [OrdersController::class, 'index']);
 Route::post('/order', [OrdersController::class, 'store']);
+Route::get('/orders/{id}', [OrdersController::class, 'show']);
+Route::put('/order/{id}', [OrdersController::class, 'update']);
+Route::delete('/order/{id}', [OrdersController::class, 'destroy']);
+
+
