@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\v1\api\Orders;
 
 use App\Http\Controllers\Controller;
+use App\Models\Orders;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -14,7 +15,11 @@ class OrdersController extends Controller
      */
     public function index()
     {
-        //
+        $order = Orders::all();
+
+        return response()->json([
+            'orders' => $order
+        ]);
     }
 
 
@@ -27,11 +32,15 @@ class OrdersController extends Controller
      */
     public function store(Request $request)
     {
+        $orders = new Orders([
+            'order_number' => $request->order_number
+        ]);
+
+        $orders->save();
 
         return response()->json([
-            'message' => $request->all()
-        ],200);
-    
+            'message' => 'Added successfully'
+        ], 200);
     }
 
     /**
@@ -42,7 +51,11 @@ class OrdersController extends Controller
      */
     public function show($id)
     {
-        //
+        $order = Orders::find($id);
+
+        return response()->json([
+            'order' => $order 
+        ]);
     }
 
 
@@ -55,7 +68,20 @@ class OrdersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+
+        $order = Orders::find($id);
+
+        $order = new Orders([
+            'order_number' => $request->order_number
+        ]);
+
+        $order->update();
+
+        return response()->json([
+            'message' => 'Order Updated Successfully',
+            'order' => $order
+        ],200);
     }
 
     /**
@@ -66,6 +92,10 @@ class OrdersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Orders::where('id', $id)->delete();
+
+        return response()->json([
+            'message' => 'order delete succefully'
+        ]);
     }
 }
