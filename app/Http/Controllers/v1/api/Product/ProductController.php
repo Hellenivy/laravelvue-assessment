@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\v1\api\Product;
+namespace App\Http\Controllers\v1\api\Products;
 
 use App\Http\Controllers\Controller;
+use App\Models\Products;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class ProductsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,18 +15,14 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $product = Products::all();
+
+        return response()->json([
+            'products' => $product
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +32,17 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $products = new Products([
+            'name' => $request->name,
+            'description' => $request ->description,
+            'quantity' => $request ->quantity
+        ]);
+
+        $products->save();
+
+        return response()->json([
+            'message' => 'Added successfully'
+        ], 200);
     }
 
     /**
@@ -46,19 +53,13 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Products::find($id);
+
+        return response()->json([
+            'product' => $product
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +70,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+
+        $product = Products::find($id);
+
+        $product = new Products([
+            'name' => $request->name,
+            'description' => $request->description,
+            'quantity' => $request->quantity
+        ]);
+
+        $product->update();
+
+        return response()->json([
+            'message' => 'Product Updated Successfully',
+            'product' => $product
+        ],200);
     }
 
     /**
@@ -80,6 +96,10 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Products::where('id', $id)->delete();
+
+        return response()->json([
+            'message' => 'product delete succefully'
+        ]);
     }
 }

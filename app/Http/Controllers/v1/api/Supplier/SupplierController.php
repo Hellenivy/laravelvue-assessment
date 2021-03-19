@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\v1\api\Supplier;
+namespace App\Http\Controllers\v1\api\Products;
 
 use App\Http\Controllers\Controller;
+use App\Models\;
 use Illuminate\Http\Request;
 
-class SupplierController extends Controller
+class SuppliersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,18 +15,14 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $supplier = Suppliers::all();
+
+        return response()->json([
+            'suppliers' => $supplier
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +32,15 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $suppliers = new Suppliers([
+            'name' => $request->name
+        ]);
+
+        $suppliers->save();
+
+        return response()->json([
+            'message' => 'Added successfully'
+        ], 200);
     }
 
     /**
@@ -46,19 +51,13 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        //
+        $supplier = Suppliers::find($id);
+
+        return response()->json([
+            'supplier' => $supplier 
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +68,20 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+
+        $supplier = Suppliers::find($id);
+
+        $supplier = new Suppliers([
+            'nae' => $request->name
+        ]);
+
+        $supplier->update();
+
+        return response()->json([
+            'message' => 'Supplier Updated Successfully',
+            'supplier' => $supplier
+        ],200);
     }
 
     /**
@@ -80,6 +92,10 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Suppliers::where('id', $id)->delete();
+
+        return response()->json([
+            'message' => 'supplier delete succefully'
+        ]);
     }
 }
