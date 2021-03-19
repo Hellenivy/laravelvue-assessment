@@ -25,4 +25,14 @@ Route::get('/orders/{id}', [OrdersController::class, 'show']);
 Route::put('/order/{id}', [OrdersController::class, 'update']);
 Route::delete('/order/{id}', [OrdersController::class, 'destroy']);
 
+Route::get('/suppliers', [SuppliersController::class, 'index']);
+Route::post('/suppliers', [SuppliersController::class, 'store']);
+Route::get('/suppliers/{id}', [SuppliersController::class, 'show']);
+Route::put('/suppliers/{id}', [SuppliersController::class, 'update']);
+Route::delete('/suppliers/{id}', [SuppliersController::class, 'destroy']);
 
+Route::get('/products', [ProductsController::class, 'index']);
+Route::post('/products', [ProductsController::class, 'store']);
+Route::get('/products/{id}', [ProductsController::class, 'show']);
+Route::put('/products/{id}', [ProductsController::class, 'update']);
+Route::delete('/products/{id}', [ProductsController::class, 'destroy']);
