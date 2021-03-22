@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\v1\api\Products;
 
 use App\Http\Controllers\Controller;
-use App\Models\;
+use App\Models\Suppliers;
 use Illuminate\Http\Request;
 
 class SuppliersController extends Controller
